@@ -2,8 +2,14 @@
 Serverless Golang
 =================
 
-- AWSLambda
+- AWS Lambda:
+  - `slides in revealjs <slides/>`_
+  - `pdf export of slides <slides/index.pdf>`_
+- TBD more about testing
+- TBB Google Cloud Functions
 - TBD Kubeless
+
+Feedback? Questions? Do not hesitate to send me an email. Helpful? Give a LIKE to `a LinkedIn post about this talk <https://www.linkedin.com/feed/update/urn:li:activity:6494326597385023488/>`_ or a `STAR <https://github.com/wojciech12/talk_serverless_in_golang>`_ to this github repo.
 
 Golang AWS Lambda with Serverless and SAM
 =========================================
@@ -68,6 +74,12 @@ see:
    curl  http://127.0.0.1:3000/hello
    curl  http://127.0.0.1:3000/hello/wojtek
    curl  http://127.0.0.1:3000/hello?name=wojtek
+
+::
+
+  python3 -m venv .venv
+  source .venv/bin/activate
+  pip install localstack
 
 Related work
 ============

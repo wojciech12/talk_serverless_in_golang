@@ -109,13 +109,13 @@ https://thenewstack.io/add-it-up-prepare-for-an-onslaught-of-go-language-serverl
 1. Kubernetes/CloudNative
 
 
-Agility. We owned it. Observability.
+Agility. We own it. Observability.
 					</script>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
-### SMACC / H<span style="text-transform: lowercase;">ypatos</span>
+### SMACC<span style="text-transform: lowercase;">.io</span> / H<span style="text-transform: lowercase;">ypatos.ia</span>
 
 1. Kubernetes/CloudNative
 2. XaaS
@@ -133,6 +133,11 @@ Agility. We owned it. Observability.
 
 <p><small>[1] [go vs nodejs](https://hackernoon.com/aws-lambda-go-vs-node-js-performance-benchmark-1c8898341982) [2] [acloud benchmark](https://read.acloud.guru/comparing-aws-lambda-performance-of-node-js-python-java-c-and-go-29c1163c2581) [3] [Cost reduced](https://runbook.cloud/blog/posts/how-we-massively-reduced-our-aws-lambda-bill-with-go/)</small></p>
 					</script>
+<!--
+- Faster then NodeJS [1], your mileage may vary
+
+<p><small>[1] <a href="https://hackernoon.com/aws-lambda-go-vs-node-js-performance-benchmark-1c8898341982">Go vs Lambda</a></small></p>
+-->
 				</section>
 
 				<section>
@@ -154,6 +159,8 @@ Agility. We owned it. Observability.
 				<section data-markdown>
 					<script type="text/template">
 ### How to start
+
+It is easy:
 
 - [serverless framework](https://github.com/serverless/serverless-golang)
 - go dep
@@ -193,9 +200,6 @@ $ curl
 $ curl
 
 $ sls remove
-$
-$
-$
 $ serverless deploy --stage production 
 -->
 
@@ -224,7 +228,6 @@ $ sam local start-api --env-vars env.json</code></pre>
 
 				<section data-markdown>
 					<script type="text/template">
-
 ### Demo - Running locally
 
 <pre><code>$ curl  http://127.0.0.1:3000/hello
@@ -234,6 +237,15 @@ $ curl  http://127.0.0.1:3000/hello?name=natalia
 					</script>
 				</section>
 
+				<section data-markdown>
+					<script type="text/template">
+### Demo - Generate events
+
+<pre><code>$ sam local generate-event
+$ sam local generate-event s3  put > put_s3.json
+$ sam local invoke "HelloWorldFunction" -e put_s3.sjon</pre></code>
+					</script>
+				</section>
 
 
 
@@ -261,8 +273,7 @@ func (context.Context, TIn) (TOut, error)</code></pre>
 <pre><code>ctx context.Context
 
 # from ctx to lambdacontext
-lc, _ := lambdacontext.FromContext(ctx)
-</code></pre>
+lc, _ := lambdacontext.FromContext(ctx)</code></pre>
 
 <p><small>see <a href="https://github.com/aws/aws-lambda-go/blob/master/lambdacontext/context.go">implementation</a></small></p>
 					</script>
@@ -275,7 +286,8 @@ lc, _ := lambdacontext.FromContext(ctx)
 
 - units
 - integration locally, e.g., with [dynamodb-local](https://hub.docker.com/r/amazon/dynamodb-local/)
-- in the cloud :/
+- [localstack.cloud](https://github.com/localstack/localstack)
+- in the cloud
 					</script>
 
 <!-- 
@@ -295,10 +307,10 @@ https://stackoverflow.com/questions/48926260/connecting-aws-sam-local-with-dynam
 ### Guide
 
 - time is $$
-- Remember how Golang works:
+- Golang:
   - Pass by value small data types
-  - Use pointers for large ones
-- Use Goroutines!
+  - Pointers for large ones
+  - Goroutines for, e.g., init
 					</script>
 <!-- 
 http://www.agardner.me/golang/garbage/collection/gc/escape/analysis/2015/10/18/go-escape-analysis.html
@@ -315,7 +327,7 @@ https://blog.travelex.io/blazing-fast-microservice-with-go-and-lambda-d30d95290f
 					<script type="text/template">
 ### Unknown
 
-- how to asses resources [1]
+- how to asses the resources [1]
 - how to integrate with our prometheus stack
 - Can we take the lesson to onPrem?
 
@@ -328,10 +340,8 @@ https://blog.travelex.io/blazing-fast-microservice-with-go-and-lambda-d30d95290f
 ### Summary
 
 - Golang is a fast and simple to read language
-- Faster then NodeJS [1], your mileage may vary
-- Later move to Terraform
-
-<p><small>[1] <a href="https://hackernoon.com/aws-lambda-go-vs-node-js-performance-benchmark-1c8898341982">Go vs Lambda</a></small></p>
+- Easy to use, give it a try :)
+- Later check more [complex examples](https://github.com/serverless/examples)
 					</script>
 <!-- https://thenewstack.io/add-it-up-prepare-for-an-onslaught-of-go-language-serverless-functions/ -->
 				</section>
@@ -381,7 +391,7 @@ Tutorials:
 				<section data-background="img/smacc/smacc_header_IT_source.jpg" data-background-repeat="" data-background-size="100%" data-background-position="bottom"
 			style="position: relative; top:0">
 					<h8>github.com/wojciech12/talk_serverless_in_golang</h8>
-					<p>Next talk: kubeless</p>
+					<p>Next talk: kubeless?</p>
 				</section>
 
 
@@ -415,7 +425,7 @@ Tutorials:
 
 				<section data-markdown>
 					<script type="text/template">
-### Next
+### Interesting
 
 - [Golang on Kubeless](https://medium.com/bitnami-perspectives/introducing-golang-functions-to-kubeless-a9a9e4f0cab1)
 - [Golang Plugins and Lambda Layers](https://medium.com/nordcloud-engineering/how-to-build-pluggable-golang-application-and-benefit-from-aws-lambda-layers-154c8117df9b)
