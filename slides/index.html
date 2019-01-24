@@ -1,0 +1,446 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Golang Serverless AWS Lambda - Intro</title>
+
+		<!-- bootstrap -->
+		<link rel="stylesheet" href="ext/bootstrap-4.1.3/css/bootstrap.css">
+
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!-- remove annoying shadow around images -->
+		<style>
+			.reveal section img {
+				background-color:white;
+				border:0;
+				box-shadow: 0 0 0 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown>
+					<script type="text/template">
+## AWS L<span style="text-transform: lowercase;">ambda in</span> G<span style="text-transform: lowercase;">olang</span>
+<br />
+#### How to start
+<br />
+<h6><small>W<span style="text-transform: lowercase;">ojciech</span> B<span style="text-transform: lowercase;">arczyński - wb</span>@<a href="https://hypatos.io" style="color:#fe702f">H<span style="text-transform: lowercase;">ypatos.ai</span></a><br /><span style="text-transform: lowercase;">wbarczynski.pro@gmail.com</span></small>
+					</script>
+				</section>
+
+				<section>
+					<h3>Wojciech Barczyński</h3>
+					<div class="container">
+						<div class="row">
+							<div class='col-md-8'>
+								<ul>
+									<li>Lead Software Engineer</li>
+									<li>Golang Warsaw Organizer</li>
+									<li>Hobby:<br />Kubernetes/CloudNative evangelist;<br />teacher/trainer</li>
+								</ul>
+							</div>
+							<div class='col-md-4'>
+								<img style="padding:6px" src="img/hypatos/hypatos_logo_b.png" width="100%" />
+							</div>
+						</div>
+					</div>
+					<p><small><a href="" style="color:#fe702f">SMACC.io</a> = <b>Hypatos.ai</b></small></p>
+					</section>
+
+				<section data-background="img/hypatos_pitch/smacc_pitch_1.png" data-background-repeat="" data-background-size="100%">
+				</section>
+
+				<!-- section data-background="img/hypatos_pitch/smacc_pitch_2.png" data-background-repeat="" data-background-size="100%">
+				</section -->
+
+				<!-- section data-markdown>
+					<script type="text/template">
+### Our product
+
+- <b>SaaS</b>
+- API platform
+- OnCloud and OnPrem
+- All Go, K8S, Python for Machine Learning
+					</script>
+				</section -->
+
+
+				<section data-markdown>
+					<script type="text/template">
+### Why Serverless
+
+1. Cut costs
+2. Simplify
+3. Generate/Prepare and cache
+
+<p><small>experience in LykeHQ</small></p>
+					</script>
+				</section>
+
+<!--
+thenewstack calls Golang the killer of other langs for impl Serverless
+
+https://thenewstack.io/add-it-up-prepare-for-an-onslaught-of-go-language-serverless-functions/
+-->
+
+				<section data-markdown>
+					<script type="text/template">
+### SMACC / H<span style="text-transform: lowercase;">ypatos</span>
+
+1. Kubernetes/CloudNative
+
+
+Agility. We owned it. Observability.
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+### SMACC / H<span style="text-transform: lowercase;">ypatos</span>
+
+1. Kubernetes/CloudNative
+2. XaaS
+3. Looking into Serverless
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+### Why Go?
+
+- Readibility
+- Performance [1][2]
+- Cheap Concurrency [3]
+
+<p><small>[1] [go vs nodejs](https://hackernoon.com/aws-lambda-go-vs-node-js-performance-benchmark-1c8898341982) [2] [acloud benchmark](https://read.acloud.guru/comparing-aws-lambda-performance-of-node-js-python-java-c-and-go-29c1163c2581) [3] [Cost reduced](https://runbook.cloud/blog/posts/how-we-massively-reduced-our-aws-lambda-bill-with-go/)</small></p>
+					</script>
+				</section>
+
+				<section>
+<img src="https://cdn.thenewstack.io/media/2018/09/9ab07c59-serverless-charts-weekly-columns.png" width="80%" />
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+### Disadvantages
+
+- Binary size
+- Complied no way to edit
+- Might have slower start [1]
+
+<p><small>[1] Some users report [slow start times](https://medium.com/@nathan.malishev/lambda-cold-starts-language-comparison-%EF%B8%8F-a4f4b5f16a62)</small></p>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+### How to start
+
+- [serverless framework](https://github.com/serverless/serverless-golang)
+- go dep
+- [amazon sam CLI](https://aws.amazon.com/serverless/sam/)
+					</script>
+				</section>
+
+
+				<section data-markdown>
+					<script type="text/template">
+### How to start
+
+<pre><code>$ npm install -g serverless
+$ go get github.com/tools/godep
+$ brew tap aws/tap; brew install aws-sam-cli</code></pre>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+### Demo - Generate code
+
+<pre><code>$ serverless create -t aws-go-dep
+</code></pre>
+
+<p><small>Definicja binary per handler</small></p>
+					</script>
+				</section>
+
+<!--
+$ serverless create -t aws-go-dep -p hello-worlder
+$ cd hello-worlder
+$ make build
+$ make deploy
+$ make remove
+$ curl 
+$ curl
+
+$ sls remove
+$
+$
+$
+$ serverless deploy --stage production 
+-->
+
+				<section data-markdown>
+					<script type="text/template">
+### Demo - Deploy
+
+<pre><code>$ make build
+$ make deploy</code></pre>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+### Demo - Running locally
+
+1. Prepare: <code>template.yaml</code> for <i>sam</i>
+
+2. Execute:
+
+<pre><code>$ sam local start-api
+$ sam local start-api --env-vars env.json</code></pre>
+					</script>
+				</section>
+
+
+				<section data-markdown>
+					<script type="text/template">
+
+### Demo - Running locally
+
+<pre><code>$ curl  http://127.0.0.1:3000/hello
+$ curl  http://127.0.0.1:3000/hello/natalia
+$ curl  http://127.0.0.1:3000/hello?name=natalia
+</code></pre>
+					</script>
+				</section>
+
+
+
+
+				<section data-markdown>
+					<script type="text/template">
+### Demo - Handlers
+
+<pre><code class="go">func ()
+func () error
+func (TIn), error
+func () (TOut, error)
+func (context.Context) error
+func (context.Context, TIn) error
+func (context.Context) (TOut, error)
+func (context.Context, TIn) (TOut, error)</code></pre>
+
+<p><small><a href="https://docs.aws.amazon.com/lambda/latest/dg/go-programming-model-handler-types.html">AWS docs on valid handlers</a></small></p>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+### Demo - Context
+
+<pre><code>ctx context.Context
+
+# from ctx to lambdacontext
+lc, _ := lambdacontext.FromContext(ctx)
+</code></pre>
+
+<p><small>see <a href="https://github.com/aws/aws-lambda-go/blob/master/lambdacontext/context.go">implementation</a></small></p>
+					</script>
+<!--[Context](https://docs.aws.amazon.com/lambda/latest/dg/go-programming-model-context.html) -->
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+### Testing
+
+- units
+- integration locally, e.g., with [dynamodb-local](https://hub.docker.com/r/amazon/dynamodb-local/)
+- in the cloud :/
+					</script>
+
+<!-- 
+A nice example of a test and custom auth:
+https://cloudnative.ly/lambdas-with-golang-a-technical-guide-6f381284897b
+-->
+
+<!--
+Running with sam and connecting to dynamodb-local:
+
+https://stackoverflow.com/questions/48926260/connecting-aws-sam-local-with-dynamodb-in-docker -->
+				</section>
+
+
+				<section data-markdown>
+					<script type="text/template">
+### Guide
+
+- time is $$
+- Remember how Golang works:
+  - Pass by value small data types
+  - Use pointers for large ones
+- Use Goroutines!
+					</script>
+<!-- 
+http://www.agardner.me/golang/garbage/collection/gc/escape/analysis/2015/10/18/go-escape-analysis.html
+
+https://segment.com/blog/allocation-efficiency-in-high-performance-go-services/
+
+https://stackoverflow.com/questions/23542989/pointers-vs-values-in-parameters-and-return-values
+
+https://blog.travelex.io/blazing-fast-microservice-with-go-and-lambda-d30d95290f28
+-->
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+### Unknown
+
+- how to asses resources [1]
+- how to integrate with our prometheus stack
+- Can we take the lesson to onPrem?
+
+<p><small>[1] <a href="https://github.com/alexcasalboni/aws-lambda-power-tuning">aws-lambda-power-tuning</a></small></p>
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+### Summary
+
+- Golang is a fast and simple to read language
+- Faster then NodeJS [1], your mileage may vary
+- Later move to Terraform
+
+<p><small>[1] <a href="https://hackernoon.com/aws-lambda-go-vs-node-js-performance-benchmark-1c8898341982">Go vs Lambda</a></small></p>
+					</script>
+<!-- https://thenewstack.io/add-it-up-prepare-for-an-onslaught-of-go-language-serverless-functions/ -->
+				</section>
+
+
+<!-- 
+	Interesting project for evaluating the recources you need
+	for your lambda:
+
+	https://github.com/alexcasalboni/aws-lambda-power-tuning
+-->
+
+<!--
+	Landscape FaaS and BaaS
+
+	https://assist-software.net/blog/pros-and-cons-serverless-computing-faas-comparison-aws-lambda-vs-azure-functions-vs-google
+
+	Faas vs Baas
+	http://anandmanisankar.com/posts/serverless-architecture/
+
+	https://blog.cloudflare.com/webassembly-on-cloudflare-workers/
+
+	https://wilsonmar.github.io/serverless/
+-->
+
+<!--
+	TO CHECK
+
+	https://github.com/tmaiaroto/aegis
+-->
+
+<!-- Benchmark kotlin vs go:
+
+https://blog.travelex.io/blazing-fast-microservice-with-go-and-lambda-d30d95290f28
+-->
+
+<!--
+Tutorials:
+
+- CRUD with DynamoDB only w AWS CLI: https://www.alexedwards.net/blog/serverless-api-with-go-and-aws-lambda
+
+- with Events Bus, Gonic, and serverless: https://medium.com/@aleccarper/build-and-deploy-a-multi-route-serverless-web-app-with-golang-on-aws-a76f7575751b
+
+- gjson: https://medium.com/build-acl/a-practical-guide-to-getting-started-with-aws-lambda-functions-using-go-3813abea730a
+-->
+
+				<section data-background="img/smacc/smacc_header_IT_source.jpg" data-background-repeat="" data-background-size="100%" data-background-position="bottom"
+			style="position: relative; top:0">
+					<h8>github.com/wojciech12/talk_serverless_in_golang</h8>
+					<p>Next talk: kubeless</p>
+				</section>
+
+
+				<section data-background="img/smacc/smacc_header_IT_source.jpg" data-background-repeat="" data-background-size="100%" data-background-position="bottom"
+			style="position: relative; top:0">
+					<h4>Thank you. Questions?</h4>
+					<p>We are hiring.</p>
+				</section>
+
+				<section>
+					<h1>Backup Slides</h1>
+				</section>
+
+				<section>
+					<img src="img/hypatos_hiring/hypatos_logo_b.png" width="40%" />
+					<img src="img/hypatos_hiring/logo_go.png" width="25%" />
+					<img src="img/hypatos_hiring/logo_python.png" width="25%" />
+
+					<img src="img/hypatos_hiring/logo_pytorch.png" width="20%" />
+					<img src="img/hypatos_hiring/logo_tensorflow.png" width="25%" />
+					<img src="img/hypatos_hiring/logo_kubernetes.svg" width="10%" />
+					<img src="img/hypatos_hiring/logo_openapi.png" width="10%" />
+
+					<img src="img/hypatos_hiring/logo_aws.png" width="20%" />
+					<img src="img/hypatos_hiring/logo_prometheus.png" width="15%"/>
+					<img src="img/hypatos_hiring/logo_azure.png" width="15%" />
+					<img src="img/hypatos_hiring/logo_lambda.png" width="15%" />
+
+					<img src="img/hypatos_hiring/smacc_lets_do_this.png" width="25%" />
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+### Next
+
+- [Golang on Kubeless](https://medium.com/bitnami-perspectives/introducing-golang-functions-to-kubeless-a9a9e4f0cab1)
+- [Golang Plugins and Lambda Layers](https://medium.com/nordcloud-engineering/how-to-build-pluggable-golang-application-and-benefit-from-aws-lambda-layers-154c8117df9b)
+- [golang and GraalVM](https://engineering.opsgenie.com/run-native-java-using-graalvm-in-aws-lambda-with-golang-ba86e27930bf)
+- [AWS Fargate](https://www.trek10.com/blog/fargate-pricing-vs-ec2/)
+					</script>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
